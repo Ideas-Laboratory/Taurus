@@ -13,8 +13,13 @@ We compiled the C++ library into a WebAssembly module and load it into the JavaS
 windows and linux environment  
 gcc(8.10.0) cmake(3.19.2)
 
-<!-- ### Build
- -->
+### Build
+We have compiled Taurus into a static library. Here is a test file that demonstrates how to use the Taurus library. To run this test-file, run build.sh and the file will be compiled and linked to the lib.
+```bash
+./build.sh
+./test
+```
+
 ### Start
 To use Taurus, you just need to include this library and define a graph, and then you can construct the structure of the graph by input file or customize the topology of the graph.
 ```bash
@@ -28,7 +33,7 @@ g.initRandomPosition
 g.initPivotMDSPosition
 g.initPosition(filename)
 ```
-Taurus implements five graph layout methods:***SM, FDP, LinLog, Maxent, BSM***. You can use these methods by inputting a graph by calling the corresponding interface.
+Taurus implements six graph layout methods:***SM, FDP, LinLog, Maxent, FMMM, BSM***. You can use these methods by inputting a graph by calling the corresponding interface.
 ```bash
 SMLayout(g)
 FDPLayout(g)
@@ -38,6 +43,8 @@ The library also supports customizing one's own graph layout. You can set the fo
 ```bash
 Layout(g,force)
 ```
-Layout results are stored in *g* as coordinates.  
-
-*We will release the C++ library after paper acepted.*
+Layout results are stored in *g* as coordinates. The library provides an interface to draw the layout results as svg.
+```bash
+g.drawSVG(filename,method-name)
+```
+If you have problems, please submit an issue.
