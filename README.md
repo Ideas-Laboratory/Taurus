@@ -49,6 +49,6 @@ g.drawSVG(filename,method-name)
 ```
 
 ### Licensing
-The source code is licensed under GPL v3. License is available [here](/LICENSE).
+The source code is licensed under LGPL v2.1. License is available [here](/LICENSE).
 
 If you have problems, please submit an issue.
