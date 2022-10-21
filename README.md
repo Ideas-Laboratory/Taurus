@@ -47,6 +47,7 @@ Layout results are stored in *g* as coordinates. The library provides an interfa
 ```bash
 g.drawSVG(filename,method-name)
 ```
+
 ### Licensing
 The source code is licensed under GPL v3. License is available [here](/LICENSE).
 
