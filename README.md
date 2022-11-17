@@ -47,6 +47,18 @@ Layout results are stored in *g* as coordinates. The library provides an interfa
 ```bash
 g.drawSVG(filename,method-name)
 ```
+### Citation
+```
+@ARTICLE{9904492,
+author={Xue, Mingliang and Wang, Zhi and Zhong, Fahai and Wang, Yong and Xu, Mingliang and Deussen, Oliver and Wang, Yunhai},
+journal={IEEE Transactions on Visualization and Computer Graphics},
+title={Taurus: Towards a Unified Force Representation and Universal Solver for Graph Layout},
+year={2022},
+volume={},
+number={},
+pages={1-10},
+doi={10.1109/TVCG.2022.3209371}}
+```
 
 ### Licensing
 The source code is licensed under LGPL v2.1. License is available [here](/LICENSE).
