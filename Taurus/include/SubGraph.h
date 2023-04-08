@@ -5,11 +5,8 @@
 #ifndef TEST_CPP_SUBGRAPH_H
 #define TEST_CPP_SUBGRAPH_H
 
-#endif //TEST_CPP_SUBGRAPH_H
-#pragma once
 #include "vector"
 
-using namespace std;
 class subNode{
 public:
     float m_x,m_y;
@@ -23,16 +20,16 @@ public:
     int dedicated_sun_node;//同层的sun_node
     double dedicated_sun_distance;
     int dedicated_pm_node;
-    vector<double> lambda; //!< the factors lambda for scaling the length of this edge
+    std::vector<double> lambda; //!< the factors lambda for scaling the length of this edge
     //! relative to the pass between v's sun and the sun of a
     //! neighbour solar system
 
-    vector<int> neighbour_s_node;//!< this is the list of the neighbour solar systems suns
+    std::vector<int> neighbour_s_node;//!< this is the list of the neighbour solar systems suns
     //! lambda[i] corresponds to neighbour_s_node[i]
 
     //vector<double>* lambda_List_ptr; //!< a poi
     //vector<int>* neighbour_s_node_List_ptr; //!< a pointer to to the neighbour_s_node list
-    vector<int>  moon_List;//!< the list of all dedicated moon nodes (!= nil if type == 3)
+    std::vector<int>  moon_List;//!< the list of all dedicated moon nodes (!= nil if type == 3)
     //vector<int>* moon_List_ptr;//!< a pointer to the moon_List
     bool placed;   //!< indicates weather an initial position has been assigned to this
     //! node or not
@@ -70,7 +67,8 @@ public:
 class subgraph{
 public:
     int numofnode,numofedge;
-    vector<subNode> sub_node;
-    vector<adjLink> sub_edge;
-    vector<vector<adjEdge>> edge;
+    std::vector<subNode> sub_node;
+    std::vector<adjLink> sub_edge;
+    std::vector<std::vector<adjEdge>> edge;
 };
+#endif //TEST_CPP_SUBGRAPH_H

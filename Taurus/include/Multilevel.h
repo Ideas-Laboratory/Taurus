@@ -2,8 +2,8 @@
 
 #ifndef MULTILEVEL_H
 #define MULTILEVEL_H
-#pragma once
-#endif
+
+
 #include "solver.h"
 #include "vector"
 #include "set"
@@ -659,3 +659,5 @@ private:
     }
 
 };
+
+#endif

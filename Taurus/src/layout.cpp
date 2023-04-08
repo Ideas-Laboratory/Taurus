@@ -8,6 +8,7 @@ void SMLayout(graph &g){
     g.append_N_range(pa_sm);
 
     g.preSolveSGD(0.01, t_max, 42);
+    cout<<"cons size="<<g.constraints.size()<<endl;
     for (int iter = 0; iter < t_max; iter++) {
         bool flag = g.solveSGD(iter);
     }
@@ -173,7 +174,7 @@ void Layout(graph &g,vector<force> f){
     for(int i=0;i<f.size();i++){
         cout<<f[i].range<<" "<<f[i].k<<" "<<f[i].a<<" "<<f[i].b<<endl;
     }
-
+    int num_of_node=g.nodes.size();
    /* para pa1(0,0,0,0,0,0,1);
     g.paraSGD=pa1;*/
     bool useQT=false;
@@ -188,10 +189,18 @@ void Layout(graph &g,vector<force> f){
     //if(big_fa&&count_fr1&&count_fr2){useQT= true;}else if(!big_fa&&!count_fr1)
     if(!big_fa&&!count_fr1&&count_fr2){useQT=true;}
     cout<<"useQT"<<useQT<<endl;
+    //malloc
+    for(int _i=0;_i<num_of_node;_i++){
+        vector<merge_cons> temp_cons(num_of_node);
+        g.append_cons.push_back(temp_cons);
+    }
+    cout<<"append_cons_size="<<g.append_cons.size()<<endl;
+
     for(int i=0;i<f.size();i++){
         if(!useQT){
             if(f[i].range==0){
                 g.append_N_range(f[i]);
+                cout<<"append N"<<i<<endl;
             }else if(f[i].range==1){
                 g.append_E_range(f[i]);
             }else if(f[i].range==2){
@@ -214,7 +223,10 @@ void Layout(graph &g,vector<force> f){
         }
     }
 
+    
+
     int t_max=30;
+    //g.alphaDecay=0.71;
     if(useQT){
         g.preSolveBH2();
         t_max=200;
@@ -234,7 +246,112 @@ void Layout(graph &g,vector<force> f){
         }
     }
 }
+void MaxentLayout(graph &g,int k_neigh){
+    //g.initPosition();
+    g.solveDij();
+    //para pa_maxent(1, 1, -2, 1, -1, 0, 2);
+    force pa_maxent2(0, -0.01, 1, 0);
+    force pa_maxent3(0, -0.0016, 1.8, 0);//for tree
+    std::vector<force> f;
+    f.push_back(force(2,1,1,2));
+    f.push_back(force(2, -1,0,1));
+    if(!g.power_law_graph()){
+        f.push_back(pa_maxent2);
+        g.alphaDecay=0.1;
+    }else{
+        f.push_back(pa_maxent3);
+        g.alphaDecay=0.001;
+    }
 
+    int t_max = 200;
+   
+    int num_of_node=g.nodes.size();
+    for(int _i=0;_i<num_of_node;_i++){
+        vector<merge_cons> temp_cons(num_of_node);
+        g.append_cons.push_back(temp_cons);
+    }
+    cout<<"append_cons_size="<<g.append_cons.size()<<endl;
+    g.append_S_range(k_neigh,f[0]);
+    //g.append_E_range(f[0]);
+    //g.append_E_range(f[1]);
+    g.append_S_range(k_neigh,f[1]);
+    g.initPivotMDSPosition(200);
+    g.append_BH_range2(f[2]);
+
+    g.preSolveBH2();
+    g.preSolveSGD2(0.01, t_max, 42,1.0f);
+    
+    for (int iter = 0; iter < t_max; iter++) {
+        g.solveSGD2(iter);
+        g.solveBH2(iter);
+    }
+}
+void t_Layout(graph &g,vector<t_force> f){
+    //if(num!=f.size()){cout<<"paremeter error!"; return;}
+    int num=f.size();
+    g.solveDij();
+    if(num<2) {fprintf(stderr,"parameter is not enough!\n"); return;}
+    cout<<"input parameter is"<<endl;
+    for(int i=0;i<f.size();i++){
+        cout<<f[i].range<<" "<<f[i].k<<" "<<f[i].a<<" "<<f[i].b<<" "<<f[i].t<<endl;
+    }
+    int num_of_node=g.nodes.size();
+   /* para pa1(0,0,0,0,0,0,1);
+    g.paraSGD=pa1;*/
+    g.t_schema=true;
+    bool useQT=false;
+    //int count_fr1=0,count_fr2=0;
+    bool big_fa=false,count_fr1=false,count_fr2=false;
+    for(int i=0;i<num;i++){
+    
+        if(f[i].range==0&&f[i].k<0&&f[i].b!=0){count_fr1=true;}
+        if(f[i].range==0&&f[i].k<0&&f[i].b==0){count_fr2=true;}
+        if(f[i].range!=1&&f[i].k>0){big_fa= true;}
+    }
+    //if(big_fa&&count_fr1&&count_fr2){useQT= true;}else if(!big_fa&&!count_fr1)
+    if(!big_fa&&!count_fr1&&count_fr2){useQT=true;}
+    cout<<"useQT"<<useQT<<endl;
+    //malloc
+    for(int _i=0;_i<num_of_node;_i++){
+        vector<merge_cons> temp_cons(num_of_node);
+        g.append_cons.push_back(temp_cons);
+    }
+    cout<<"append_cons_size="<<g.append_cons.size()<<endl;
+
+    for(int i=0;i<f.size();i++){
+        if(f[i].range==0){
+            if(!useQT){
+                 g.append_N_range(f[i]);
+                cout<<"append N"<<i<<endl;
+            }else{
+                g.append_BH_t_force(f[i]);
+            }
+        }else{
+             if(f[i].range==1){
+                g.append_E_range(f[i]);}
+        }
+    }
+
+    int t_max=30;
+    //g.alphaDecay=0.71;
+    if(useQT){
+        t_max=300;
+        g.preSolve_t_BH(t_max,0.034,1);
+        g.alphaDecay=0.0001;
+    }
+    g.preSolveSGD2(1, t_max, 42,100);
+    //g.preSolveSGD_linear();
+ 
+    cout<<"t_max="<<t_max<<" decay="<<g.alphaDecay<<" threshold="<<g.threshold<<endl;
+    for (int iter = 0; iter < t_max; iter++) {
+         g.solveSGD_t(iter);
+        if(useQT){
+            g.solve_t_BH(iter);
+        }
+       
+        
+    }
+}
 
 
 

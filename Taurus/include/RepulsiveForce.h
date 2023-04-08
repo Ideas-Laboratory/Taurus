@@ -2,7 +2,7 @@
 #ifndef TEST_CPP_REPULSIVEFORCE_H
 #define TEST_CPP_REPULSIVEFORCE_H
 
-#endif //TEST_CPP_REPULSIVEFORCE_H
+
 #include "SubGraph.h"
 #include "vector"
 #include "math.h"
@@ -91,3 +91,4 @@ protected:
         return 1/d;
     }
 };
+#endif //TEST_CPP_REPULSIVEFORCE_H

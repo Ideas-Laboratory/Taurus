@@ -11,16 +11,20 @@ int main(int argc, char ** argv){
     //string s="price_1000.mtx";
     cout<<"11111"<<endl;
     string filename = "bus1138.mtx";
+     cout<<"3333"<<endl;
     if (argc > 1) {
 		//strcpy(filename, argv[1]);
         filename=argv[1];
 	}
-    string pos="data/"+filename;
-    cout<<"pos===="<<pos<<endl;
+    cout<<"222"<<endl;
+    string pos="../data/"+filename;
+    cout<<"pos="<<pos<<endl;
+
     g.initgraph(pos,1);
+    cout<<"11"<<endl;
     g.initRandomPosition();// pmds  input position
     g.solveDij();
-   // g.initPivotMDSPosition(200);
+    g.initPivotMDSPosition(200);
     // for(int i=0;i<g.n;i++){
     //     cout<<g.nodes[i].x<<","<<g.nodes[i].y<<endl;
     // }
@@ -41,16 +45,13 @@ int main(int argc, char ** argv){
     struct timeval start,end;
     gettimeofday(&start,NULL);
     //FMMMLayout(g);
-    // FDPLayout(g);
+   // FDPLayout(g);
     Layout(g,f);
-    
     //t_Layout(g,tf);
-   // FMMMLayout fmmm;
-    //fmmm.call(g);
     gettimeofday(&end,NULL);
     float time_use=(end.tv_sec-start.tv_sec)*1000000+(end.tv_usec-start.tv_usec);//微秒
     printf("time_use is %.3fs\n",time_use/1000000);
-  // FMMMLayout fmmm;
+   //FMMMLayout fmmm;
     //fmmm.call(g);
 
     //f.push_back(force(1,1,1,1));
@@ -81,7 +82,7 @@ int main(int argc, char ** argv){
         }
     }
    // string output= "fig/" +filename;
-    g.drawSVG(filename,"SM",1);
+    g.drawSVG(filename,"t-FDP",1);
    // g.drawSVG(output,"t-FDP",1);
     cout << "stress:" <<setiosflags(ios::fixed)<<setprecision(3)<< (edgelen / edgenum) << endl;
     cout<<"NP1="<<testNP3(g.nodes, g.links, g.sp,1)<<endl;
