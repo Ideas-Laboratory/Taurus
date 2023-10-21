@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Taurus/static/css/main.754ab393.css",
-    "main.js": "/Taurus/static/js/main.7c6d1665.js",
+    "main.js": "/Taurus/static/js/main.c881337e.js",
     "static/js/787.1582336b.chunk.js": "/Taurus/static/js/787.1582336b.chunk.js",
     "index.html": "/Taurus/index.html",
     "main.754ab393.css.map": "/Taurus/static/css/main.754ab393.css.map",
-    "main.7c6d1665.js.map": "/Taurus/static/js/main.7c6d1665.js.map",
+    "main.c881337e.js.map": "/Taurus/static/js/main.c881337e.js.map",
     "787.1582336b.chunk.js.map": "/Taurus/static/js/787.1582336b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.754ab393.css",
-    "static/js/main.7c6d1665.js"
+    "static/js/main.c881337e.js"
   ]
 }
